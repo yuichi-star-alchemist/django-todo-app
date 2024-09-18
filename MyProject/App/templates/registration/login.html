@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div style="text-align: center;">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_div }}
+      <input type="submit">
+    </form>
+    <a href="http://localhost:8000/admin">管理ページ</a><br>
+  </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="task-list">
+    {% for task in object_list %}
+      <form id="task-form-{{ forloop.counter }}" method="POST" action="{% url 'app:task_delete' task.pk %}">
+        {% csrf_token %}
+        <div>
+          <p>{{ task.detail }}</p>
+          <p>期限: {{ task.end_time }}</p>
+          <a class="button" href="{% url 'app:task_update' task.pk %}">編集</a>
+          <button type="button" onclick="confirmDelete('{{ task.detail }}', '{{ forloop.counter }}')">削除</button>
+        </div>
+      </form>
+    {% empty %}
+    <p>現在タスクがありません！</p>
+    {% endfor %}
+  </div>
+
+{% endblock %}
+{% block script %}
+  <script>
+    function confirmDelete(taskDetail, formCounter) {
+      if (confirm(`タスク: ${taskDetail} を削除します\nよろしいですか？`)) {
+          document.getElementById(`task-form-${formCounter}`).submit();
+      }
+    }
+  </script>
+{% endblock %}

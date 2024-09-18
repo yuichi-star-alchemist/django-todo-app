@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div style="text-align: center">
+    <a href="{% url 'app:login' %}">ログイン</a><br>
+    <form action="{% url 'app:logout' %}", method="POST">
+      {% csrf_token %}
+      <button>ログアウトする！</button>
+    </form>
+    <a href="{% url 'app:user_create' %}">ユーザー作成</a><br>
+    <a href="{% url 'app:task_create' %}">タスク作成</a><br>
+    <a href="{% url 'app:task_list' %}">タスク一覧</a><br>
+    <a href="http://localhost:8000/admin">管理ページ</a><br>
+  </div>
+{% endblock %}

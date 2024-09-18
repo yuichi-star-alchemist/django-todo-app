@@ -1,0 +1,3 @@
+__pycache__/
+/MyProject/db.sqlite3
+/MyProject/App/migrations/
