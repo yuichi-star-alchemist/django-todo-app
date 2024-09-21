@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block grand_content %}
+  <main>
+    <div class="detail">
+      <div>
+        {{ task.title }}
+      </div>
+      <div>
+        {{ task.detail }}
+      </div>
+      <div>
+        {{ task.end_time }}
+      </div>
+    </div>
+    <div class="button-container">
+      <div class="button green-button"><a href="{% url 'app:task_update' task.pk %}">編集</a></div>
+      <div class="button reverse-button"><a href="{% url 'app:task_list' %}">戻る</a></div>
+    </div>
+  </main>
+{% endblock %}

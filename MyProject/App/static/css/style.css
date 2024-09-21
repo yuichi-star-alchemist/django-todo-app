@@ -1,41 +1,276 @@
+/*---------------------------------------------------リセット--*/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td{
+margin:0; padding:0;
+}
+table{
+border-collapse:collapse; border-spacing:0;
+}
+fieldset, img{
+border:0;
+}
+address, caption, cite, code, dfn, em, strong, th, var{
+font-style:normal; font-weight:normal;
+}
+ol, ul{
+list-style:none;
+}
+caption, th{
+text-align:left;
+}
+h1, h2, h3, h4, h5, h6{
+font-size:100%; font-weight:normal;
+}
+q:before, q:after{
+content:”;
+}
+abbr, acronym{
+border:0;
+}
+/*--------------------------------------------------/リセット--*/
+
+:root {
+  --button-height: 50;/* px */
+  --button-fontsize: 18;/* px */
+  --button-green: rgb(62, 203, 62);
+  --button-blue: rgb(88, 199, 255);
+}
+
 body {
-  margin: 10px auto;
+  margin: auto;
   max-width: 900px;
+  font-size: calc(var(--button-fontsize) * 1px);
+}
+
+body > div.container {
+  height: 85vh;
+}
+
+main {
+  max-width: 732px;
+  min-width: 400px;
+  margin: 10px auto 0;
+}
+
+/* button ------------------------------------ */
+button {
+  background-color: unset;
+  cursor: pointer;
+  border: none;
 }
 
 .button {
-  appearance: auto;
-  text-rendering: auto;
-  color: buttontext;
-  letter-spacing: normal;
-  word-spacing: normal;
-  line-height: normal;
-  text-transform: none;
-  text-indent: 0px;
-  text-shadow: none;
-  display: inline-block;
+  font-size: calc(var(--button-fontsize) * 1px);
   text-align: center;
-  align-items: flex-start;
-  cursor: default;
-  box-sizing: border-box;
-  background-color: buttonface;
-  margin: 0em;
-  padding-block: 1px;
-  padding-inline: 6px;
-  border-width: 2px;
-  border-style: outset;
-  border-color: buttonborder;
-  border-image: initial;
-}
-
-.task-list > form > div {
-  display: flex;
-  justify-content: center;
-}
-
-.home-button {
   display: block;
-  width: 50px;
-  height: 30px;
-  margin: 20px auto;
+  line-height: calc(var(--button-height) / var(--button-fontsize));
+  border-radius: 8px;
+  color: rgb(242, 242, 242);
+  text-decoration: none;
+  overflow: hidden;
+  height: 50px;
+  width: calc(450px * 40 / 100);
+}
+
+.signup-button {
+  background: var(--button-blue);
+  margin-top: 10px;
+}
+
+.button > a {
+  color: rgb(242, 242, 242);
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+.blue-button {
+  background: var(--button-blue);
+  margin: 0 auto;
+}
+
+.gray-button {
+  background: rgb(156, 153, 153);
+}
+
+.red-button {
+  background: rgb(241, 56, 56);
+}
+
+.reverse-button {
+  background: #fff;
+  border: 1px solid var(--button-blue);
+}
+
+.reverse-button > a {
+  color: var(--button-blue);
+}
+
+.green-button {
+  background: var(--button-green);
+}
+
+.header-button {
+  width: 120px;
+}
+
+.header {
+  height: 50px;
+  background: var(--button-blue);
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+}
+/* task list  ----------------------- */
+.sub-header {
+  display: flex;
+}
+
+.sub-header > .pagination {
+  width: 40%;
+  margin: 10px 0 0 auto;
+  text-align: right;
+}
+
+.step-links {
+  line-height: calc(var(--button-height) / var(--button-fontsize));
+}
+
+.task-list > form > .container {
+  padding: 0 16px 0 16px;
+  display: flex;
+  border-bottom: 2px solid rgb(194, 191, 191);
+  height: 80px
+}
+
+.task-view > p:first-child {
+  margin: 10px 0;
+}
+
+.task-view > p:first-child {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.deadline {
+  width: 150px;
+  margin-left: 10px;
+}
+
+.deadline > p {
+  display: block;
+  height: 50px;
+  margin: 20px auto auto auto;
+  text-align: center;
+  line-height: calc(var(--button-height) / var(--button-fontsize));
+  border-radius: 8px;
+  background: rgb(255, 145, 0);
+  color: rgb(242, 242, 242);
+}
+
+.task-navi {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.task-navi > .button {
+  width: 60px;
+  margin-left: 5px;
+}
+/* task create,update,detail  ----------------- */
+.form-container,
+.detail {
+  height: calc(100vh - 180px);
+  min-height: 430px;
+  width: 95%;
+}
+
+.form-container > div,
+.detail > div,
+.button-container {
+  width: 450px;
+  margin: 0 auto;
+}
+
+.form-container > div:nth-of-type(1),
+.detail > div:nth-of-type(1) {
+  height: 20%;
+  margin-top: 30px;
+}
+
+.form-container > div:nth-of-type(2),
+.detail > div:nth-of-type(2) {
+  height: 45%;
+  margin-top: 10px;
+}
+
+.form-container > div:nth-of-type(2) > textarea,
+.detail > div:nth-of-type(2) > textarea {
+  min-width: 450px;
+  max-width: 450px;
+  min-height: 160px;
+  max-height: 160px;
+  font-size: 18px;
+  padding: 5px;
+}
+.form-container > div:nth-of-type(3),
+.detail > div:nth-of-type(3) {
+  height: 20%;
+  margin-top: 10px;
+}
+
+.form-container > div > label {
+  display: block;
+  height: calc(var(--button-fontsize) * 2px);
+  line-height: 2;
+}
+
+.form-container > div > input {
+  width: 100%;
+  height: calc(100% - 4px - calc(var(--button-fontsize) * 2px));
+  font-size: calc(var(--button-fontsize) * 1px);
+  padding-left: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.detail > div:nth-of-type(1),
+.detail > div:nth-of-type(2),
+.detail > div:nth-of-type(3) {
+  text-align: center;
+}
+
+.detail > div:nth-of-type(2) {
+  overflow-wrap: break-word;
+}
+/* signup login  -------------------------------- */
+
+.registration-navi {
+  text-align: center;
+  padding-top: 70px;
+  padding-bottom: 10px;
+}
+
+.registration-container {
+  margin: 0 auto;
+  height: 480px;
+  width: 450px;
+}
+
+.registration-container > div {
+  height: 12%;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.registration-container > div > input {
+  width: 100%;
+  height: 36px;
+  text-align: left;
+  padding-left: 10px;
+  box-sizing: border-box;
 }

@@ -1,21 +1,51 @@
 {% extends 'base.html' %}
-{% block content %}
-  <div class="task-list">
-    {% for task in object_list %}
-      <form id="task-form-{{ forloop.counter }}" method="POST" action="{% url 'app:task_delete' task.pk %}">
-        {% csrf_token %}
-        <div>
-          <p>{{ task.detail }}</p>
-          <p>期限: {{ task.end_time }}</p>
-          <a class="button" href="{% url 'app:task_update' task.pk %}">編集</a>
-          <button type="button" onclick="confirmDelete('{{ task.detail }}', '{{ forloop.counter }}')">削除</button>
-        </div>
-      </form>
-    {% empty %}
-    <p>現在タスクがありません！</p>
-    {% endfor %}
+{% load extras %}
+{% block grand_content %}
+  <div class="sub-header">
+    <div class="button signup-button"><a href="{% url 'app:task_create' %}">新規作成</a></div>
+    <div class="pagination">
+      <span class="step-links">
+          {% if page_obj.has_previous %}
+              <a href="?page=1">&laquo; 最初</a>
+              <a href="?page={{ page_obj.previous_page_number }}">前</a>
+          {% endif %}
+  
+          <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          </span>
+  
+          {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">次</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">最後 &raquo;</a>
+          {% endif %}
+      </span>
+    </div>
   </div>
-
+  <main>
+    <div class="task-list">
+      {% for task in object_list %}
+        <form id="task-form-{{ forloop.counter }}" method="POST" action="{% url 'app:task_delete' task.pk %}">
+          {% csrf_token %}
+          <div class="container">
+            <div class="task-view">
+              <p>{{ task.title }}</p>
+              <p>期限: {{ task.end_time }}</p>
+            </div>
+            {% if task.end_time|is_no_deadline %}
+            <div class="deadline"><p>期限切れです！</p></div>
+            {% endif %}
+            <div class="task-navi">
+              <a class="button gray-button" href="{% url 'app:task_detail' task.pk %}">詳細</a>
+              <a class="button green-button" href="{% url 'app:task_update' task.pk %}">編集</a>
+              <button class="button red-button" type="button" onclick="confirmDelete('{{ task.detail }}', '{{ forloop.counter }}')">完了</button>
+            </div>
+          </div>
+        </form>
+      {% empty %}
+      <p>現在タスクがありません！</p>
+      {% endfor %}
+    </div>
+  </main>
 {% endblock %}
 {% block script %}
   <script>

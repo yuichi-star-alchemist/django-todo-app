@@ -7,13 +7,13 @@ from .models import AppUsers, Tasks
 
 class EmailLoginForm(AuthenticationForm):
     username = UsernameField(
-        label='メールアドレス',
+        label='',
         widget=forms.EmailInput(
             attrs={'id': 'email','placeholder': 'メールアドレス','maxlength': 64}
         )
     )
     password = forms.CharField(
-        label='パスワード',
+        label='',
         strip=False,
         widget=forms.PasswordInput(
             attrs={"autocomplete": "current-password",'placeholder': 'パスワード'}
@@ -31,12 +31,28 @@ class EmailLoginForm(AuthenticationForm):
 
 
 class UserForm(forms.ModelForm):
-    password_confirm = forms.CharField(widget=forms.PasswordInput, max_length=128, label='パスワード確認')
+    password_confirm = forms.CharField(
+        label='',
+        max_length=128,
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'パスワード確認'}
+        )
+    )
     
     class Meta:
         model = AppUsers
         fields = ['email', 'username', 'password']
-        widgets = {'password': forms.PasswordInput}
+        widgets = {
+            'email': forms.EmailInput(attrs={'placeholder': 'メールアドレス'}),
+            'username': forms.TextInput(attrs={'placeholder': 'ユーザー名'}),
+            'password': forms.PasswordInput(attrs={'placeholder': 'パスワード'})
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.label = ''
+        # self.label_suffix = ''
     
     def clean(self):
         cleaned_data = super().clean()
@@ -54,5 +70,10 @@ class TaskForm(forms.ModelForm):
         model = Tasks
         fields = ['title', 'detail', 'end_time']
         widgets = {
-            'end_time': forms.DateInput(attrs={'type': 'date'})
+            'detail': forms.Textarea(attrs={'rows': 5, 'cols': 24}),
+            'end_time': forms.DateInput(attrs={'type': 'date'}),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ''

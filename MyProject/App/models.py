@@ -79,7 +79,7 @@ class Tasks(models.Model):
         verbose_name='タスクID'
     )
     title = models.CharField(
-        max_length=64,
+        max_length=16,
         verbose_name='タイトル'
     )
     detail = models.CharField(

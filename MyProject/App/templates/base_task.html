@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block grand_content %}
+  <div class="container">
+    <main>
+      <form method="post" id="task-input">
+        <div class="form-container">
+          {% csrf_token %}
+          {{ form }}
+        </div>
+      </form>
+      <dib class="button-container">
+        {% block content %}{% endblock %}
+        <div class="button reverse-button"><a href="{% url 'app:task_list' %}">戻る</a></div>
+      </dib>
+    </main>
+  </div>
+{% endblock %}
