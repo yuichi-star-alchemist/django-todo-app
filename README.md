@@ -1,7 +1,7 @@
 アプリの構成のモデル  
 https://github.com/var-co-jp/todo-app-sample  
 Djangoの学習のためなので構成を考える部分は省略しました  
-Dockerコンテナ上でDjangoを使用してtodoウェブアプリを動かすサンプルです
+Dockerコンテナ上でDjangoを使用してtodoウェブアプリを動かすサンプルです  
 もし参考になれば見てみてください  
 パスワードポリシーを緩めている、  
 秘密鍵が書いてある等、全く本番環境用ではありません  
@@ -28,7 +28,7 @@ python manage.py makemigrations App
 python manage.py migrate
 python manage.py createsuperuser
 ```
-④ブラウザでアクセス
+④ブラウザでアクセス  
 ```
 http://localhost:8000
 ```
