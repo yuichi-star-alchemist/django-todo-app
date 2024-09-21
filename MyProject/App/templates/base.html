@@ -8,10 +8,8 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-
-  {% block content %}{% endblock %}
-
-  <a href="{% url 'app:index' %}" class="home-button">ホーム</a>
+  {% include 'components/header.html' %}
+  {% block grand_content %}{% endblock %}
 
   {% block script %}{% endblock %}
 </body>

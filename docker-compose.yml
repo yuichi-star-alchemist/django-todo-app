@@ -4,7 +4,11 @@ services:
     build:
       dockerfile: Docker/Django/Dockerfile
     ports:
+    # ローカルマシンのポート:コンテナosのポートをリンク
       - "8000:8000"
     volumes:
+    # ホストマシンのディレクトリ:コンテナosのディレクトリ
+    # マウントでのリンク
       - ./MyProject:/usr/src/app
+    # docker compose upと同時にサーバー起動
     command: python manage.py runserver 0.0.0.0:8000

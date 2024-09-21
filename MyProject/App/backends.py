@@ -3,7 +3,11 @@ from django.contrib.auth.backends import ModelBackend
 from .models import AppUsers
 
 UserModel = AppUsers
-
+"""
+実装の変更はないが、コード中で使用するUserModelにEmail認証モデルであるAppUsersを使用するために再定義
+なお理由は不明ですが、AUTH_USER_MODELの書き換えをmiddlewareでアクセスごとに切り替えているが、
+それのみではカバーしきれていないようでここで書いております
+"""
 class EmailBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         if username is None:

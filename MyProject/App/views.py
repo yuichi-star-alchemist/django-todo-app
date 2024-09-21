@@ -2,7 +2,7 @@ from django.contrib.auth import hashers
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, TemplateView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 import random
 from django.http import Http404
 
@@ -12,6 +12,14 @@ from .models import AppUsers, Tasks
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
+    extra_context = {'name' : 'ゲストさん'}
+    # ログインユーザーのusernameを取得してレンダリングする変更
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            self.extra_context['name'] = self.request.user.username
+            context.update(self.extra_context)
+        return context
 
 
 class EmailLoginView(LoginView):
@@ -20,7 +28,7 @@ class EmailLoginView(LoginView):
 
 
 class UserCreateView(CreateView):
-    template_name = 'user_create.html'
+    template_name = 'registration/signup.html'
     # model = AppUsers
     form_class = UserForm
     success_url = reverse_lazy('app:index')
@@ -31,19 +39,12 @@ class UserCreateView(CreateView):
         return super().form_valid(form)
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'user_update.html'
-    model = AppUsers
-    form_class = UserForm
-    success_url = reverse_lazy('app:index')
-
-
 class TaskCreateView(LoginRequiredMixin, CreateView):
     template_name = 'task_create.html'
     model = Tasks
     form_class = TaskForm
-    success_url = reverse_lazy('app:index')
-    
+    success_url = reverse_lazy('app:task_list')
+    # ForeignKeyの連携を設定 値ではなくオブジェクトが入っている
     def form_valid(self, form):
         form.instance.user_id = AppUsers.objects.get(id=self.request.user.pk)
         return super().form_valid(form)
@@ -51,17 +52,24 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 class TaskListView(LoginRequiredMixin, ListView):
     template_name = 'task_list.html'
     model = Tasks
+    # 自動ページネーションの1ページでの表示数
+    paginate_by = 10
     
     def get_queryset(self):
         # ログインユーザーのデータをend_timeでソート
         return self.model.objects.filter(user_id=self.request.user.pk).order_by('end_time')
+    
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'detail.html'
+    model = Tasks
+    context_object_name = 'task'
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'task_update.html'
     model = Tasks
     form_class = TaskForm
     success_url = reverse_lazy('app:task_list')
-    
+    # タスクリストをカレントユーザーの作成物のみに
     def get_queryset(self):
         return super().get_queryset().filter(user_id=self.request.user.pk)
 

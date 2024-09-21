@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block grand_content %}
+  {% load extras %}
   <div class="container">
     <main>
       <form class="registration-container" method="post">
-        <h2 class="registration-navi">ログインしてください！</h2>
+        <h2 class="registration-navi">登録してください！</h2>
         {% csrf_token %}
         {{ form }}
-        <button class="button blue-button" type="submit">ログイン！</button>
+        <button class="button blue-button" type="submit">登録！</button>
       </form>
       <div class="button blue-button">
-        <a href="{% url 'app:user_create' %}">新規登録はこちら！</a>
+        <a href="{% url 'app:login' %}">ログインはこちら！</a>
       </div>
     </main>
   </div>

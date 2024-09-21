@@ -1,14 +1,9 @@
 {% extends 'base.html' %}
-{% block content %}
-  <div style="text-align: center">
-    <a href="{% url 'app:login' %}">ログイン</a><br>
-    <form action="{% url 'app:logout' %}", method="POST">
-      {% csrf_token %}
-      <button>ログアウトする！</button>
-    </form>
-    <a href="{% url 'app:user_create' %}">ユーザー作成</a><br>
-    <a href="{% url 'app:task_create' %}">タスク作成</a><br>
-    <a href="{% url 'app:task_list' %}">タスク一覧</a><br>
-    <a href="http://localhost:8000/admin">管理ページ</a><br>
+{% block grand_content %}
+  <a href="http://localhost:8000/admin">管理ページ</a><br>
+  <div style="text-align: center; height: 400px;">
+    <h1 style="display: block; font-size: 48px; padding-top: 150px; color: rgb(88, 199, 255);">
+      ようこそ！<br>{{ name }}さん
+    </h1>
   </div>
 {% endblock %}
