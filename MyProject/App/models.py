@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import uuid
-
+# gettext_lazy as _ により_()の中の英文は翻訳される機能がある
 
 class AdminSiteUsers(AbstractUser):
     class Meta:
@@ -49,6 +49,7 @@ class AppUsers(AbstractUser):
             "The groups this user belongs to. A user will get all permissions "
             "granted to each of their groups."
         ),
+        # related_nameがかぶるエラーのために追加 あまりよくわかっていない
         related_name="app_user_set",
         related_query_name="user",
     )
@@ -61,7 +62,7 @@ class AppUsers(AbstractUser):
         related_query_name="user",
     )
     
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email'# 主にこの変数の値が認証の主軸になる
     REQUIRED_FIELDS = []
     
     def __str__(self):

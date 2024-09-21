@@ -13,7 +13,7 @@ from .models import AppUsers, Tasks
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'index.html'
     extra_context = {'name' : 'ゲストさん'}
-    
+    # ログインユーザーのusernameを取得してレンダリングする変更
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
@@ -44,7 +44,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Tasks
     form_class = TaskForm
     success_url = reverse_lazy('app:task_list')
-    
+    # ForeignKeyの連携を設定 値ではなくオブジェクトが入っている
     def form_valid(self, form):
         form.instance.user_id = AppUsers.objects.get(id=self.request.user.pk)
         return super().form_valid(form)
@@ -52,6 +52,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 class TaskListView(LoginRequiredMixin, ListView):
     template_name = 'task_list.html'
     model = Tasks
+    # 自動ページネーションの1ページでの表示数
     paginate_by = 10
     
     def get_queryset(self):
@@ -68,7 +69,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Tasks
     form_class = TaskForm
     success_url = reverse_lazy('app:task_list')
-    
+    # タスクリストをカレントユーザーの作成物のみに
     def get_queryset(self):
         return super().get_queryset().filter(user_id=self.request.user.pk)
 

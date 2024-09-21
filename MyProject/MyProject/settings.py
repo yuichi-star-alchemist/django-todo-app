@@ -69,6 +69,8 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'App.AdminSiteUsers'
 AUTHENTICATION_BACKENDS = [
+    # アプリへのアクセスはemail認証にする為のbackend指定
+    # middlewareの追加部分によりアクセスurlに応じて環境変数?を操作、使用するbackendを自動選択
     'App.backends.EmailBackend',  # AppUser認証バックエンド
     'django.contrib.auth.backends.ModelBackend',  # デフォルトの認証バックエンド
 ]

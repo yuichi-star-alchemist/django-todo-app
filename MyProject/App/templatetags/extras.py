@@ -2,7 +2,7 @@ from django import template
 from datetime import date
 
 register = template.Library()
-
+# レンダリング時に使用できるtemplateフィルター用関数
 
 @register.filter(expects_localtime=True)
 def is_no_deadline(value):

@@ -8,6 +8,7 @@ from .models import AdminSiteUsers, AppUsers, Tasks
 class AdminUserAdmin(UserAdmin):
     pass
     # readonly_fields = ['id']
+    # アドミンサイトのカスタマイズは今回は最低限にとどめました
 
 @admin.register(AppUsers)
 class AppUsersAdmin(admin.ModelAdmin):

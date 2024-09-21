@@ -7,7 +7,7 @@ from .models import AppUsers, Tasks
 
 class EmailLoginForm(AuthenticationForm):
     username = UsernameField(
-        label='',
+        label='',# レンダリング時のlabel名 空ならlabel自体生成されない
         widget=forms.EmailInput(
             attrs={'id': 'email','placeholder': 'メールアドレス','maxlength': 64}
         )
@@ -24,7 +24,7 @@ class EmailLoginForm(AuthenticationForm):
         "invalid_login": "メールアドレスまたはパスワードに誤りがあります",
         "inactive": 'このアカウントは非アクティブです',
     }
-    
+    # これ上でできそうですね・・
     def __init__(self, request=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['autocomplete'] = 'email'
@@ -42,12 +42,12 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = AppUsers
         fields = ['email', 'username', 'password']
-        widgets = {
+        widgets = {# 生成されるhtml要素への変更
             'email': forms.EmailInput(attrs={'placeholder': 'メールアドレス'}),
             'username': forms.TextInput(attrs={'placeholder': 'ユーザー名'}),
             'password': forms.PasswordInput(attrs={'placeholder': 'パスワード'})
         }
-    
+    # これもうえでできそう・・
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
@@ -73,7 +73,7 @@ class TaskForm(forms.ModelForm):
             'detail': forms.Textarea(attrs={'rows': 5, 'cols': 24}),
             'end_time': forms.DateInput(attrs={'type': 'date'}),
         }
-    
+    # これも上でできそう
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ''
